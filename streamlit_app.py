@@ -37,7 +37,7 @@ llm = OpenAI(
 
 agente = Agent(data,
                config={"llm": llm,
-                      "verbose": True, "response_parser": StreamlitResponse}},
+                      "verbose": True, "response_parser": StreamlitResponse},
               )
 
 prompt_usuario = st.chat_input('Pergunte algo sobre as respostas do formulário do Vigidesastres')

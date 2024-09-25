@@ -27,5 +27,8 @@ llm = OpenAI(
 
 agente = Agent(data, config={"llm": llm})
 
-prompt = st.chat_input('Fale com o chat')
+prompt = st.chat_input('Pergunte algo sobre as respostas do formulário do Vigidesastres')
 #resposta = agente.chat('faça um gráfico de linha do tempo com as respostas')
+if prompt:
+    nova_mensagem = {'role':'user', 'content':prompt}
+    chat = st.chat_message(nova_mensagem['role'])

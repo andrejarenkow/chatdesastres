@@ -5,6 +5,15 @@ from pandasai import SmartDataframe
 from pandasai.llm import OpenAI
 from pandasai import Agent
 
+# Configurações da página
+st.set_page_config(
+    page_title="ChatDesastres RS",
+    page_icon="⛈️",
+    #layout="wide",
+    #initial_sidebar_state='collapsed'
+) 
+
+
 # Leitura do dataframe
 data = pd.read_excel(st.secrets['link_planilha'])
 

@@ -39,7 +39,7 @@ agente = Agent(data, config={"llm": llm})
 prompt_usuario = st.chat_input('Pergunte algo sobre as respostas do formulário do Vigidesastres')
 
 #resposta = agente.chat('faça um gráfico de linha do tempo com as respostas')
-if prompt:
+if prompt_usuario:
     prompt = 'Este dataframe é um formulário de municípios que estão passando por situação de desastre. ' + prompt_usuario + ' Dê a resposta em markdown'
     nova_mensagem = {'role':'user', 'content':prompt_usuario}
     chat = st.chat_message(nova_mensagem['role'])

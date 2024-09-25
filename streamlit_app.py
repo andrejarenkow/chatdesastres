@@ -13,6 +13,9 @@ st.set_page_config(
     #initial_sidebar_state='collapsed'
 ) 
 
+# título
+st.header('Chat Desastres RS', divider=True)
+
 # Verifica se a chave 'mensagens' existe no st.session_state
 if 'mensagens' not in st.session_state:
         st.session_state.mensagens = []  # Inicializa 'mensagens' como uma lista vazia

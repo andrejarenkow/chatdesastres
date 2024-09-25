@@ -54,7 +54,10 @@ if prompt_usuario:
     chat = st.chat_message('assistant')
     placeholder = chat.empty()
     resposta_completa = agente.chat(prompt)
-    placeholder.markdown(resposta_completa)
+    if resposta_completa.endswith(".png"):
+        st.image(resposta_completa)
+    else:
+        st.markdown(resposta_completa)
 
 
     

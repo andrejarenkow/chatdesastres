@@ -40,7 +40,7 @@ prompt_usuario = st.chat_input('Pergunte algo sobre as respostas do formulário 
 
 #resposta = agente.chat('faça um gráfico de linha do tempo com as respostas')
 if prompt_usuario:
-    prompt = 'Este dataframe é um formulário de municípios que estão passando por situação de desastre. ' + prompt_usuario + ' Dê a resposta em markdown e nunca em forma de dataframe'
+    prompt = 'Este dataframe é um formulário de municípios que estão passando por situação de desastre. Os municípios são divididos por Coordenadorias Regiinais de Saúde (CRS)' + prompt_usuario + ' Dê a resposta em markdown e nunca em forma de dataframe'
     nova_mensagem = {'role':'user', 'content':prompt_usuario}
     chat = st.chat_message(nova_mensagem['role'])
     chat.markdown(nova_mensagem['content'])

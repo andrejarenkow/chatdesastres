@@ -13,11 +13,19 @@ st.set_page_config(
     #initial_sidebar_state='collapsed'
 ) 
 
-
 # Leitura do dataframe
 data = pd.read_excel(st.secrets['link_planilha'])
 
 # filtrando somente Carimbo de data/hora depoius de 2024-09-09
 data = data[data['Carimbo de data/hora'] > '2024-09-09']
 
-data
+# Instantiate a LLM
+llm = OpenAI(
+    api_token=st.secrets['OPENAI_API_KEY'],
+    temperature=0,
+)
+
+agente = Agent(data, config={"llm": llm})
+
+prompt = st.chat_input('Fale com o chat')
+#resposta = agente.chat('faça um gráfico de linha do tempo com as respostas')

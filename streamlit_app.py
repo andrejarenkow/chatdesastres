@@ -13,6 +13,12 @@ st.set_page_config(
     #initial_sidebar_state='collapsed'
 ) 
 
+# Verifica se a chave 'mensagens' existe no st.session_state
+if 'mensagens' not in st.session_state:
+        st.session_state.mensagens = []  # Inicializa 'mensagens' como uma lista vazia
+
+mensagens = st.session_state['mensagens']  # Acessa a lista de mensagens
+
 # Leitura do dataframe
 data = pd.read_excel(st.secrets['link_planilha'])
 
@@ -32,3 +38,5 @@ prompt = st.chat_input('Pergunte algo sobre as respostas do formulário do Vigid
 if prompt:
     nova_mensagem = {'role':'user', 'content':prompt}
     chat = st.chat_message(nova_mensagem['role'])
+    chat.markdown(nova_mensagem['content'])
+    mensagens.append(nova_mensagem)

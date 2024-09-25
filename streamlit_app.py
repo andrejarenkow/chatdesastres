@@ -40,3 +40,10 @@ if prompt:
     chat = st.chat_message(nova_mensagem['role'])
     chat.markdown(nova_mensagem['content'])
     mensagens.append(nova_mensagem)
+
+    # Gerar resposta do modelo da tabela
+    chat = st.chat_message('assistant')
+    placeholder = chat.empty()
+    resposta_completa = agente.chat(prompt)
+    placeholder.markdown(resposta_completa)
+    

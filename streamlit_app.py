@@ -25,10 +25,10 @@ if 'mensagens' not in st.session_state:
 mensagens = st.session_state['mensagens']  # Acessa a lista de mensagens
 
 # Leitura do dataframe
-data = pd.read_excel(st.secrets['link_planilha'])
+df = pd.read_excel(st.secrets['link_planilha'])
 
 # filtrando somente Carimbo de data/hora depoius de 2024-09-09
-df = data[data['Carimbo de data/hora'] > '2024-09-23']
+df = df[df['Carimbo de data/hora'] >= '2024-09-23']
 
 # Instantiate a LLM
 #llm = OpenAI(
@@ -36,7 +36,7 @@ df = data[data['Carimbo de data/hora'] > '2024-09-23']
 #    temperature=0,
 #)
 llm =  BambooLLM(api_key=st.secrets["BAMBOO_API_KEY"])
-agente = Agent(df,
+agente = SmartDataframe(df,
                config={'llm':llm,
                        "verbose": True,
                        "response_parser": StreamlitResponse})

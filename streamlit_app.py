@@ -30,15 +30,15 @@ data = pd.read_excel(st.secrets['link_planilha'])
 data = data[data['Carimbo de data/hora'] > '2024-09-23']
 
 # Instantiate a LLM
-llm = OpenAI(
-    api_token=st.secrets['OPENAI_API_KEY'],
-    temperature=0,
-)
-
+#llm = OpenAI(
+#    api_token=st.secrets['OPENAI_API_KEY'],
+#    temperature=0,
+#)
+llm =  BambooLLM(api_key=st.secrets["BAMBOO_API_KEY"])
 agente = Agent(data,
-               config={"llm": llm,
-                      "verbose": True, "response_parser": StreamlitResponse},
-              )
+               config={'llm':llm,
+                       "verbose": True,
+                       "response_parser": StreamlitResponse})
 
 prompt_usuario = st.chat_input('Pergunte algo sobre as respostas do formulário do Vigidesastres')
 

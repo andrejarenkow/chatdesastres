@@ -5,6 +5,7 @@ from pandasai import SmartDataframe
 from pandasai.llm import OpenAI
 from pandasai import Agent
 from pandasai.responses.streamlit_response import StreamlitResponse
+from pandasai.llm import BambooLLM
 
 # Configurações da página
 st.set_page_config(

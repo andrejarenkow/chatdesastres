@@ -9,6 +9,7 @@ from pandasai.llm import BambooLLM
 from langchain.agents.agent_types import AgentType
 from langchain_experimental.agents.agent_toolkits import create_csv_agent
 from langchain_openai import ChatOpenAI, OpenAI
+from langchain_experimental.agents import create_pandas_dataframe_agent
 
 # Configurações da página
 st.set_page_config(

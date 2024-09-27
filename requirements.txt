@@ -4,3 +4,7 @@ pandasai
 PyYAML
 openpyxl
 tabulate
+langchain
+langchain-openai 
+langchain_experimental 
+pandas

@@ -58,7 +58,7 @@ nomes_colunas =         [
 
 
 consumer_complaint_data = pd.read_csv('https://docs.google.com/spreadsheets/d/1mnF0CnGhJD41i7L-FZ1_K1gEhfpIgVmQO_6AEEVFNyM/pub?output=csv',
-                                      parse_dates= ['Carimbo de data/hora'],
+                                      parse_dates= ['Data e hora da resposta'],
                                       dayfirst =  True,
                                       names = nomes_colunas,
                                       header = 0

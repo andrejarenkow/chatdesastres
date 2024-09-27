@@ -87,7 +87,10 @@ csv_agent = create_pandas_dataframe_agent(
     df,
     agent_type="tool-calling",
     allow_dangerous_code = True,
-    verbose=True
+    verbose=True,
+    include_df_in_prompt = True,
+    number_of_head_rows = 10,
+    prefix='Este é um dataframe chamado df a partir de um Google Forms, onde as respostas são relacionadas aos municípios que passam por situação de desastre'
 )
 
 prompt_usuario = st.chat_input('Pergunte algo sobre as respostas do formulário do Vigidesastres')

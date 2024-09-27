@@ -21,6 +21,12 @@ st.set_page_config(
 # título
 st.header('Chat Desastres RS', divider=True)
 
+    # Verifica se a chave 'mensagens' existe no st.session_state
+if 'mensagens' not in st.session_state:
+        st.session_state.mensagens = []  # Inicializa 'mensagens' como uma lista vazia
+
+mensagens = st.session_state['mensagens']  # Acessa a lista de mensagens
+
 consumer_complaint_data = pd.read_csv('https://docs.google.com/spreadsheets/d/1mnF0CnGhJD41i7L-FZ1_K1gEhfpIgVmQO_6AEEVFNyM/pub?output=csv', parse_dates= ['Carimbo de data/hora'], dayfirst =  True)
 consumer_complaint_data_setembro = consumer_complaint_data[consumer_complaint_data['Carimbo de data/hora']>='2024-09-23']
 
@@ -78,12 +84,18 @@ if prompt_usuario:
     nova_mensagem = {'role':'user', 'content':prompt_usuario}
     chat = st.chat_message(nova_mensagem['role'])
     chat.markdown(nova_mensagem['content'])
+    mensagens.append(nova_mensagem)
 
     # Gerar resposta do modelo da tabela
     chat = st.chat_message('assistant')
     placeholder = chat.empty()
     resposta_completa = csv_agent.invoke({'input': prompt_usuario})['output']
     placeholder.write(resposta_completa)
+     
+    # Cria a nova mensagem apenas se houver conteúdo na resposta completa
+    if resposta_completa:
+        nova_mensagem = {'role': 'assistant', 'content': resposta_completa}
+        mensagens.append(nova_mensagem)
 
 
     

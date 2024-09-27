@@ -80,12 +80,12 @@ prompt_usuario = st.chat_input('Pergunte algo sobre as respostas do formulário 
 if prompt_usuario:
     nova_mensagem = {'role':'user', 'content':prompt_usuario}
     chat = st.chat_message(nova_mensagem['role'])
-    chat.markdown(nova_mensagem['content'])
+    chat.write(nova_mensagem['content'])
     mensagens.append(nova_mensagem)
 
     # Gerar resposta do modelo da tabela
     chat = st.chat_message('assistant')
-    placeholder = chat.empty()
+    #placeholder = chat.empty()
     resposta_completa = ''
 
     placeholder.markdown('| ')

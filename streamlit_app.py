@@ -97,6 +97,8 @@ if prompt_usuario:
         nova_mensagem = {'role': 'assistant', 'content': resposta_completa}
         mensagens.append(nova_mensagem)
 
+    st.session_state['mensagens'] = mensagens
+
 
     
     

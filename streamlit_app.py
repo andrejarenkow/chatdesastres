@@ -100,11 +100,11 @@ if prompt_usuario:
         placeholder.markdown(resposta_completa)  # Atualiza o placeholder com o conteúdo parcial
       
       # Cria a nova mensagem apenas se houver conteúdo na resposta completa
-      if resposta_completa:
+    if resposta_completa:
           nova_mensagem = {'role': 'assistant', 'content': resposta_completa}
           mensagens.append(nova_mensagem)
 
-      st.session_state['mensagens'] = mensagens
+    st.session_state['mensagens'] = mensagens
      
 
 

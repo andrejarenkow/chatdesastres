@@ -89,17 +89,11 @@ if prompt_usuario:
     resposta_completa = ''
 
     placeholder.markdown('| ')
-    respostas = csv_agent.invoke({'input': prompt_usuario})['output']
+    resposta = csv_agent.invoke({'input': prompt_usuario})['output']
     #placeholder.write(resposta_completa)
-
-    for resposta in respostas:
-        resposta_completa += str(resposta)
-        placeholder.markdown(resposta_completa)  # Atualiza o placeholder com o conteúdo parcial
-      
-      # Cria a nova mensagem apenas se houver conteúdo na resposta completa
-    if resposta_completa:
-          nova_mensagem = {'role': 'assistant', 'content': resposta_completa}
-          mensagens.append(nova_mensagem)
+    placeholder.write(resposta)  # Atualiza o placeholder com o conteúdo parcial
+    nova_resposta = {'role': 'assistant', 'content': resposta}
+    mensagens.append(nova_resposta)
 
     st.session_state['mensagens'] = mensagens
      

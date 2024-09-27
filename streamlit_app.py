@@ -19,7 +19,7 @@ st.set_page_config(
 ) 
 
 # título
-st.header('Chat Desastres RS', divider=True)
+st.header('Chat Desastres RS - memória curta', divider=True)
 
     # Verifica se a chave 'mensagens' existe no st.session_state
 if 'mensagens' not in st.session_state:
@@ -86,7 +86,7 @@ if prompt_usuario:
     chat = st.chat_message('assistant')
     #placeholder = chat.empty()
 
-    resposta = csv_agent.invoke({'input': mensagens})['output']
+    resposta = csv_agent.invoke({'input': prompt_usuario})['output']
     #placeholder.write(resposta_completa)
     chat.write(resposta)  # Atualiza o placeholder com o conteúdo parcial
     nova_resposta = {'role': 'assistant', 'content': resposta}

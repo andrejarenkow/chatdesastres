@@ -72,7 +72,7 @@ csv_agent = create_csv_agent(
     include_df_in_prompt  = 10,
     agent_type = AgentType.OPENAI_FUNCTIONS,
     prefix='Este é um dataframe chamado df a partir de um Google Forms, onde as respostas são relacionadas aos municípios que passam por situação de desastre',
-    sufix = 'Não invente nenhum dado, atenha-se apenas ao que está escrito nas respostas.'
+    sufix = 'Não invente nenhum dado, atenha-se apenas ao que está escrito nas respostas. Responda sempre em forma de lista.'
 )
 #llm = ChatOpenAI(model="gpt-4o-mini-2024-07-18", temperature=0, api_key=st.secrets["OPENAI_API_KEY"])
 #csv_agent = create_pandas_dataframe_agent(

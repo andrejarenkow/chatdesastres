@@ -77,7 +77,6 @@ csv_agent = create_csv_agent(
 prompt_usuario = st.chat_input('Pergunte algo sobre as respostas do formulário do Vigidesastres')
 
 resposta = csv_agent.invoke({'input': 'quais municípios tiveram problema com abastecimento de água?'})
-print(resposta['output'])
 
 #resposta = agente.chat('faça um gráfico de linha do tempo com as respostas')
 if prompt_usuario:

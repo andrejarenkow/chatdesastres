@@ -62,17 +62,24 @@ nomes_colunas =         [
        'Quais são esses abrigos? Descreva o local e sua capacidade de ocupação. Se possível informe o número de pessoas abrigadas (Ex: Ginásio municipal ...)']
 
 
-csv_agent = create_csv_agent(
-    ChatOpenAI(temperature=0, model="gpt-4o-mini-2024-07-18", api_key=st.secrets["OPENAI_API_KEY"]),
-    path='consumer_complaint_data.csv',
-    pandas_kwargs={'sep': ';', 'parse_dates': ['Data e hora da resposta'], 'dayfirst': True, 'names':nomes_colunas, 'header':0},
-    allow_dangerous_code=True,
-    verbose=True,
+#csv_agent = create_csv_agent(
+#    ChatOpenAI(temperature=0, model="gpt-4o-mini-2024-07-18", api_key=st.secrets["OPENAI_API_KEY"]),
+#    path='consumer_complaint_data.csv',
+#    pandas_kwargs={'sep': ';', 'parse_dates': ['Data e hora da resposta'], 'dayfirst': True, 'names':nomes_colunas, 'header':0},
+#    allow_dangerous_code=True,
+#    verbose=True,
     #include_df_in_prompt  = 10,
-    agent_type = AgentType.OPENAI_FUNCTIONS,
-    prefix='Este é um dataframe chamado df a partir de um Google Forms, onde as respostas são relacionadas aos municípios que passam por situação de desastre'
+#    agent_type = AgentType.OPENAI_FUNCTIONS,
+#    prefix='Este é um dataframe chamado df a partir de um Google Forms, onde as respostas são relacionadas aos municípios que passam por situação de desastre'
+#)
+llm = ChatOpenAI(model="gpt-4o-mini-2024-07-18", temperature=0, api_key=st.secrets["OPENAI_API_KEY"])
+csv_agent = create_pandas_dataframe_agent(
+    llm,
+    df,
+    agent_type="tool-calling",
+    allow_dangerous_code = True,
+    verbose=True
 )
-
 
 prompt_usuario = st.chat_input('Pergunte algo sobre as respostas do formulário do Vigidesastres')
 

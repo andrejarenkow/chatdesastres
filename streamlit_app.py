@@ -76,8 +76,6 @@ csv_agent = create_csv_agent(
 
 prompt_usuario = st.chat_input('Pergunte algo sobre as respostas do formulário do Vigidesastres')
 
-resposta = csv_agent.invoke({'input': 'quais municípios tiveram problema com abastecimento de água?'})
-
 #resposta = agente.chat('faça um gráfico de linha do tempo com as respostas')
 if prompt_usuario:
     nova_mensagem = {'role':'user', 'content':prompt_usuario}
@@ -91,7 +89,7 @@ if prompt_usuario:
     resposta_completa = ''
 
     placeholder.markdown('| ')
-    respostas = csv_agent.invoke({'input': prompt_usuario})['output']
+    respostas = csv_agent.invoke({'input': mensagens})['output']
     #placeholder.write(resposta_completa)
 
     for resposta in respostas:

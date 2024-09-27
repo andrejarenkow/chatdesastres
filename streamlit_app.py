@@ -28,12 +28,6 @@ if 'mensagens' not in st.session_state:
 
 mensagens = st.session_state['mensagens']  # Acessa a lista de mensagens
 
-consumer_complaint_data = pd.read_csv('https://docs.google.com/spreadsheets/d/1mnF0CnGhJD41i7L-FZ1_K1gEhfpIgVmQO_6AEEVFNyM/pub?output=csv', parse_dates= ['Carimbo de data/hora'], dayfirst =  True)
-df = consumer_complaint_data[consumer_complaint_data['Carimbo de data/hora']>='2024-09-23']
-
-# Save dataset as CSV
-df.to_csv('consumer_complaint_data.csv', index=False, sep=';')
-
 # Nomes das colunas
 nomes_colunas =         [
         'Data e hora da resposta',
@@ -63,6 +57,19 @@ nomes_colunas =         [
        'Quais são esses abrigos? Descreva o local e sua capacidade de ocupação. Se possível informe o número de pessoas abrigadas (Ex: Ginásio municipal ...)']
 
 
+consumer_complaint_data = pd.read_csv('https://docs.google.com/spreadsheets/d/1mnF0CnGhJD41i7L-FZ1_K1gEhfpIgVmQO_6AEEVFNyM/pub?output=csv',
+                                      parse_dates= ['Carimbo de data/hora'],
+                                      dayfirst =  True,
+                                      names = nomes_colunas,
+                                      header = 0
+                                     )
+df = consumer_complaint_data[consumer_complaint_data['Data e hora da resposta']>='2024-09-23']
+
+# Save dataset as CSV
+df.to_csv('consumer_complaint_data.csv', index=False, sep=';')
+
+
+
 csv_agent = create_csv_agent(
     ChatOpenAI(temperature=0, model="gpt-4o-mini-2024-07-18", api_key=st.secrets["OPENAI_API_KEY"]),
     path='consumer_complaint_data.csv',
@@ -74,14 +81,14 @@ csv_agent = create_csv_agent(
     prefix='Este é um dataframe chamado df a partir de um Google Forms, onde as respostas são relacionadas aos municípios que passam por situação de desastre',
     sufix = 'Não invente nenhum dado, atenha-se apenas ao que está escrito nas respostas. Responda sempre em forma de lista.'
 )
-#llm = ChatOpenAI(model="gpt-4o-mini-2024-07-18", temperature=0, api_key=st.secrets["OPENAI_API_KEY"])
-#csv_agent = create_pandas_dataframe_agent(
-#    llm,
-#    df,
-#    agent_type="tool-calling",
-#    allow_dangerous_code = True,
-#    verbose=True
-#)
+llm = ChatOpenAI(model="gpt-4o-mini-2024-07-18", temperature=0, api_key=st.secrets["OPENAI_API_KEY"])
+csv_agent = create_pandas_dataframe_agent(
+    llm,
+    df,
+    agent_type="tool-calling",
+    allow_dangerous_code = True,
+    verbose=True
+)
 
 prompt_usuario = st.chat_input('Pergunte algo sobre as respostas do formulário do Vigidesastres')
 

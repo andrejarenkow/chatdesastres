@@ -83,10 +83,7 @@ if prompt_usuario:
     chat = st.chat_message('assistant')
     placeholder = chat.empty()
     resposta_completa = csv_agent.invoke({'input': prompt_usuario})#['output']
-    if resposta_completa.endswith(".png"):
-        st.image(resposta_completa)
-    else:
-        st.write(resposta_completa)
+    placeholder.write(resposta_completa)
 
 
     

@@ -89,7 +89,7 @@ if prompt_usuario:
     resposta_completa = ''
 
     placeholder.markdown('| ')
-    respostas = csv_agent.invoke({'input': mensagens})['output']
+    respostas = csv_agent.invoke({'input': prompt_usuario})['output']
     #placeholder.write(resposta_completa)
 
     for resposta in respostas:

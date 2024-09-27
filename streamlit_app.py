@@ -29,10 +29,10 @@ if 'mensagens' not in st.session_state:
 mensagens = st.session_state['mensagens']  # Acessa a lista de mensagens
 
 consumer_complaint_data = pd.read_csv('https://docs.google.com/spreadsheets/d/1mnF0CnGhJD41i7L-FZ1_K1gEhfpIgVmQO_6AEEVFNyM/pub?output=csv', parse_dates= ['Carimbo de data/hora'], dayfirst =  True)
-consumer_complaint_data_setembro = consumer_complaint_data[consumer_complaint_data['Carimbo de data/hora']>='2024-09-23']
+df = consumer_complaint_data[consumer_complaint_data['Carimbo de data/hora']>='2024-09-23']
 
 # Save dataset as CSV
-consumer_complaint_data_setembro.to_csv('consumer_complaint_data.csv', index=False, sep=';')
+#df.to_csv('consumer_complaint_data.csv', index=False, sep=';')
 
 # Nomes das colunas
 nomes_colunas =         [

@@ -89,15 +89,24 @@ if prompt_usuario:
     # Gerar resposta do modelo da tabela
     chat = st.chat_message('assistant')
     placeholder = chat.empty()
-    resposta_completa = csv_agent.invoke({'input': prompt_usuario})['output']
-    placeholder.write(resposta_completa)
-     
-    # Cria a nova mensagem apenas se houver conteúdo na resposta completa
-    if resposta_completa:
-        nova_mensagem = {'role': 'assistant', 'content': resposta_completa}
-        mensagens.append(nova_mensagem)
+    resposta_completa = ''
 
-    st.session_state['mensagens'] = mensagens
+    placeholder.markdown('| ')
+    respostas = csv_agent.invoke({'input': prompt_usuario})['output']
+    #placeholder.write(resposta_completa)
+
+    for resposta in respostas:
+        resposta_completa += str(resposta)
+        placeholder.markdown(resposta_completa)  # Atualiza o placeholder com o conteúdo parcial
+      
+      # Cria a nova mensagem apenas se houver conteúdo na resposta completa
+      if resposta_completa:
+          nova_mensagem = {'role': 'assistant', 'content': resposta_completa}
+          mensagens.append(nova_mensagem)
+
+      st.session_state['mensagens'] = mensagens
+     
+
 
 
     

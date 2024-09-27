@@ -84,11 +84,10 @@ if prompt_usuario:
 
     # Gerar resposta do modelo da tabela
     chat = st.chat_message('assistant')
-    #placeholder = chat.empty()
+    placeholder = chat.empty()
 
     resposta = csv_agent.invoke({'input': prompt_usuario})['output']
-    #placeholder.write(resposta_completa)
-    chat.write(resposta)  # Atualiza o placeholder com o conteúdo parcial
+    placeholder.write(resposta)  # Atualiza o placeholder com o conteúdo parcial
     nova_resposta = {'role': 'assistant', 'content': resposta}
     mensagens.append(nova_resposta)
 

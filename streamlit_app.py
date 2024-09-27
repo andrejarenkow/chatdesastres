@@ -82,7 +82,7 @@ if prompt_usuario:
     # Gerar resposta do modelo da tabela
     chat = st.chat_message('assistant')
     placeholder = chat.empty()
-    resposta_completa = csv_agent.invoke({'input': prompt_usuario})['output']
+    resposta_completa = csv_agent.invoke({'input': prompt_usuario})#['output']
     if resposta_completa.endswith(".png"):
         st.image(resposta_completa)
     else:

@@ -58,7 +58,7 @@ nomes_colunas =         [
 
 csv_agent = create_csv_agent(
     ChatOpenAI(temperature=0, model="gpt-4o-mini-2024-07-18", api_key=st.secrets["OPENAI_API_KEY"]),
-    path='/content/consumer_complaint_data.csv',
+    path='consumer_complaint_data.csv',
     pandas_kwargs={'sep': ';', 'parse_dates': ['Data e hora da resposta'], 'dayfirst': True, 'names':nomes_colunas, 'header':0},
     allow_dangerous_code=True,
     verbose=True,

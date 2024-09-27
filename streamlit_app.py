@@ -76,7 +76,6 @@ csv_agent = create_csv_agent(
 
 prompt_usuario = st.chat_input('Pergunte algo sobre as respostas do formulário do Vigidesastres')
 
-#resposta = agente.chat('faça um gráfico de linha do tempo com as respostas')
 if prompt_usuario:
     nova_mensagem = {'role':'user', 'content':prompt_usuario}
     chat = st.chat_message(nova_mensagem['role'])
@@ -86,12 +85,10 @@ if prompt_usuario:
     # Gerar resposta do modelo da tabela
     chat = st.chat_message('assistant')
     #placeholder = chat.empty()
-    resposta_completa = ''
 
-    placeholder.markdown('| ')
     resposta = csv_agent.invoke({'input': prompt_usuario})['output']
     #placeholder.write(resposta_completa)
-    placeholder.write(resposta)  # Atualiza o placeholder com o conteúdo parcial
+    chat.write(resposta)  # Atualiza o placeholder com o conteúdo parcial
     nova_resposta = {'role': 'assistant', 'content': resposta}
     mensagens.append(nova_resposta)
 

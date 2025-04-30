@@ -69,7 +69,7 @@ groq_api_key = st.secrets["GROQ_API_KEY"]
 llm = Groq(
     model_name="mixtral-8x7b-32768",
     temperature=0,
-    max_tokens=2000,
+    #max_tokens=2000,
     api_key=groq_api_key
 )
 

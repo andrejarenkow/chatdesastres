@@ -1,11 +1,8 @@
 import streamlit as st
 import pandas as pd
-from langchain.agents import Agent
-from langchain.agents.agent_types import AgentType
-from langchain_community.llms import Groq
-import docling
-from docling import Document
-import os
+from langtool import GroqProvider
+from langtool.exceptions import LangToolError
+from langtool.models import LLMResult
 
 # Configurações da página
 st.set_page_config(
@@ -64,32 +61,24 @@ df = consumer_complaint_data[consumer_complaint_data['Data e hora da resposta'] 
 # Salvar como CSV
 df.to_csv('consumer_complaint_data.csv', index=False, sep=';')
 
-# Transformar o DataFrame em markdown usando o docling
-doc = Document(df, title="Respostas do Formulário do Vigidesastres")
-markdown_content = doc.to_markdown()
-
-# Configurar o LLM do Groq
+# Configurar o Groq via LangTool
 groq_api_key = st.secrets["GROQ_API_KEY"]
-llm = Groq(
+
+provider = GroqProvider(
     model_name="mixtral-8x7b-32768",
-    temperature=0,
+    api_key=groq_api_key,
     max_tokens=2000,
-    api_key=groq_api_key
+    temperature=0
 )
 
-# Criar um agente personalizado para o CSV em markdown
-class CSVAgent(Agent):
-    def __init__(self, llm, markdown_content):
-        self.llm = llm
-        self.markdown_content = markdown_content
-        super().__init__()
-
-    def invoke(self, prompt):
-        full_prompt = f"{self.markdown_content}\n\n{prompt}"
-        response = self.llm(full_prompt)
-        return {"output": response}
-
-csv_agent = CSVAgent(llm, markdown_content)
+# Função para gerar respostas
+def generate_response(prompt):
+    try:
+        response = provider.llm(prompt)
+        return response
+    except LangToolError as e:
+        st.error(f"Erro ao gerar resposta: {e}")
+        return None
 
 # Interface de chat
 prompt_usuario = st.chat_input('Pergunte algo sobre as respostas do formulário do Vigidesastres')
@@ -104,9 +93,10 @@ if prompt_usuario:
     chat = st.chat_message('assistant')
     placeholder = chat.empty()
 
-    resposta = csv_agent.invoke({'input': prompt_usuario})['output']
-    placeholder.write(resposta)
-    nova_resposta = {'role': 'assistant', 'content': resposta}
-    mensagens.append(nova_resposta)
+    resposta = generate_response(prompt_usuario)
+    if resposta:
+        placeholder.write(resposta)
+        nova_resposta = {'role': 'assistant', 'content': resposta}
+        mensagens.append(nova_resposta)
 
     st.session_state['mensagens'] = mensagens

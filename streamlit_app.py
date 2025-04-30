@@ -2,9 +2,9 @@ import streamlit as st
 import pandas as pd
 from langchain.agents import Agent
 from langchain.agents.agent_types import AgentType
-from langchain_experimental.agents import create_pandas_dataframe_agent
 from langchain_community.llms import Groq
-from langchain_openai import ChatOpenAI
+import docling
+from docling import Document
 import os
 
 # Configurações da página
@@ -64,26 +64,32 @@ df = consumer_complaint_data[consumer_complaint_data['Data e hora da resposta'] 
 # Salvar como CSV
 df.to_csv('consumer_complaint_data.csv', index=False, sep=';')
 
-# Configurar o modelo Groq
+# Transformar o DataFrame em markdown usando o docling
+doc = Document(df, title="Respostas do Formulário do Vigidesastres")
+markdown_content = doc.to_markdown()
+
+# Configurar o LLM do Groq
 groq_api_key = st.secrets["GROQ_API_KEY"]
 llm = Groq(
     model_name="mixtral-8x7b-32768",
     temperature=0,
-    #max_tokens=2000,
+    max_tokens=2000,
     api_key=groq_api_key
 )
 
-# Criar o agente do dataframe
-csv_agent = create_pandas_dataframe_agent(
-    llm,
-    df,
-    agent_type="tool-calling",
-    allow_dangerous_code=True,
-    verbose=True,
-    include_df_in_prompt=True,
-    number_of_head_rows=10,
-    prefix='Este é um dataframe chamado df a partir de um Google Forms, onde as respostas são relacionadas aos municípios que passam por situação de desastre'
-)
+# Criar um agente personalizado para o CSV em markdown
+class CSVAgent(Agent):
+    def __init__(self, llm, markdown_content):
+        self.llm = llm
+        self.markdown_content = markdown_content
+        super().__init__()
+
+    def invoke(self, prompt):
+        full_prompt = f"{self.markdown_content}\n\n{prompt}"
+        response = self.llm(full_prompt)
+        return {"output": response}
+
+csv_agent = CSVAgent(llm, markdown_content)
 
 # Interface de chat
 prompt_usuario = st.chat_input('Pergunte algo sobre as respostas do formulário do Vigidesastres')
